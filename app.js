@@ -7,9 +7,9 @@ app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-async function getDataBooks() {
+async function getData(basePath) {
     try {
-        const dataBooks = await fs.promises.readFile("./booksdata.json", "utf-8")
+        const dataBooks = await fs.promises.readFile(basePath, "utf-8")
         const manipulateData = JSON.parse(dataBooks)
         return manipulateData
     } catch (error) {
@@ -19,7 +19,7 @@ async function getDataBooks() {
 
 app.get("/books", async(req, res)=>{
     try {
-        const dataBooks = await getDataBooks()
+        const dataBooks = await getData("./booksdata.json")
         res.status(200).json(dataBooks)
     } catch (error) {
         res.status(500).json(error)
@@ -29,7 +29,7 @@ app.get("/books", async(req, res)=>{
 app.get("/books/:id", async(req, res)=>{
     try {
         const idBooks = req.params.id
-        const dataBooks = await getDataBooks()
+        const dataBooks = await getData("./booksdata.json")
 
         let booksById = dataBooks.find(el => {
             return el.id == idBooks
@@ -47,8 +47,8 @@ app.get("/books/:id", async(req, res)=>{
 
 app.get("/ejs/books", async(req, res)=>{
     try {
-        const dataBooks = await getDataBooks()
-        res.render("tableBooks", {dataBooks: dataBooks})
+        const dataBooks = await getData("./booksdata.json")
+        res.render("tableBooks", {dataBooks})
     } catch (error) {
         res.status(500).json(error)
     }
