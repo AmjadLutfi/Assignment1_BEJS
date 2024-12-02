@@ -1,0 +1,22 @@
+<h1>TABLE BOOKS</h1>
+
+<table border="1">
+    <tr>
+        <th>No.</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Publish Year</th>
+        <th>Edition</th>
+        <th>Price</th>
+    </tr>
+    <% dataBooks.forEach(el => { %>
+        <tr>
+            <td><%= el.id %></td>
+            <td><%= el.title %></td>
+            <td><%= el.author %></td>
+            <td><%= el.year_written %></td>
+            <td><%= el.edition %></td>
+            <td><%= el.price %></td>
+        </tr>
+    <% }); %>
+</table>
